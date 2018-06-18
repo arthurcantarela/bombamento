@@ -136,7 +136,12 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
           calculate={this.calculate}
         />
       ),
-      resultado: <Resultado bombas={this.state.bombas} />
+      resultado: (
+        <Resultado
+          redo={() => this.setState({ view: "integralizacao" })}
+          bombas={this.state.bombas}
+        />
+      )
     };
     return (
       <div className="App">
