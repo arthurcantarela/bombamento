@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "./App.scss";
 
-import { Integralizacao } from "./components";
+import { Integralizacao, Resultado } from "./components";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bombas: 0,
+      bombas: null,
       integralizacao: `
       Registro Acadêmico: 183916         RG.: 54.681.051-2SP
 
@@ -105,18 +105,17 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
 
   calculate = () => {
     const integralizacao = this.state.integralizacao;
-    const bombas = integralizacao.match(
+    let bombas = integralizacao.match(
       /[A-Z\s]{2}\d{3}\s[A-Z]\s*\d{2}[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
     );
-    console.log(
-      bombas.map(bomba => ({
-        code: bomba.match(/^.{5}/)[0],
-        credits: parseInt(
-          bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0]
-        )
-      }))
-    );
-    this.setState({ bombas: 1 });
+    bombas = bombas.map(bomba => ({
+      code: bomba.match(/^.{5}/)[0],
+      credits: parseInt(bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0]),
+      year: parseInt(bomba.match(/\d{4}$/)[0]),
+      semester: bomba.match(/.{2}(?=\d{4}$)/)[0],
+      grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
+    }));
+    this.setState({ bombas: bombas });
   };
 
   render() {
@@ -127,7 +126,7 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
           onChange={this.updateIntegralizacao}
           calculate={this.calculate}
         />
-        <div>Bombas: {this.state.bombas}</div>
+        {!this.state.bombas ? null : <Resultado bombas={this.state.bombas} />}
       </div>
     );
   }
