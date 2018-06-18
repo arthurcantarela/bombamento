@@ -106,7 +106,7 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
   calculate = () => {
     const integralizacao = this.state.integralizacao;
     const bombas = integralizacao.match(
-      /[A-Z\s]{2}\d{3}\s[A-Z]\s*\d{2}\s[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
+      /[A-Z\s]{2}\d{3}\s[A-Z]\s*\d{2}[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
     );
     console.log(
       bombas.map(bomba => ({
