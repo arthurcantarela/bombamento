@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "./App.scss";
 
-import { Integralizacao, Resultado } from "./components";
+import { Home, Integralizacao, Resultado } from "views";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: "home",
       bombas: null,
       integralizacao: `
       Registro Acadêmico: 183916         RG.: 54.681.051-2SP
@@ -118,21 +119,33 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
       semester: bomba.match(/.{2}(?=\d{4}$)/)[0],
       grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
     }));
-    this.setState({ bombas: bombas });
+    this.setState({ bombas: bombas, view: "resultado" });
   };
 
-  render() {
-    return (
-      <div className="App">
+  render = () => {
+    const views = {
+      home: (
+        <Home
+          goToIntegralizacao={() => this.setState({ view: "integralizacao" })}
+        />
+      ),
+      integralizacao: (
         <Integralizacao
           value={this.state.integralizacao}
           onChange={this.updateIntegralizacao}
           calculate={this.calculate}
         />
-        {!this.state.bombas ? null : <Resultado bombas={this.state.bombas} />}
+      ),
+      resultado: <Resultado bombas={this.state.bombas} />
+    };
+    return (
+      <div className="App">
+        {this.state.view && views && views[this.state.view]
+          ? views[this.state.view]
+          : null}
       </div>
     );
-  }
+  };
 }
 
 export default App;

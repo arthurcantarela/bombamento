@@ -1,2 +1,1 @@
-export { default as Integralizacao } from "./Integralizacao";
-export { default as Resultado } from "./Resultado";
+export { default as Bomba } from "./Bomba";
