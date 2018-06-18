@@ -111,7 +111,9 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
     console.log(
       bombas.map(bomba => ({
         code: bomba.match(/^.{5}/)[0],
-        credits: parseInt(bomba.match(/(?<=^.{10})\d{2}/)[0])
+        credits: parseInt(
+          bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0]
+        )
       }))
     );
     this.setState({ bombas: 1 });
