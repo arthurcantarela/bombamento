@@ -110,8 +110,11 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
     );
     bombas = bombas.map(bomba => ({
       code: bomba.match(/^.{5}/)[0],
-      credits: parseInt(bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0]),
-      year: parseInt(bomba.match(/\d{4}$/)[0]),
+      credits: parseInt(
+        bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0],
+        10
+      ),
+      year: parseInt(bomba.match(/\d{4}$/)[0], 10),
       semester: bomba.match(/.{2}(?=\d{4}$)/)[0],
       grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
     }));
