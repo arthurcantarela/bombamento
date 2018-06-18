@@ -112,11 +112,10 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
     bombas = bombas.map(bomba => ({
       code: bomba.match(/^.{5}/)[0],
       credits: parseInt(
-        bomba.match(/(?<=^[A-Z\s]{2}\d{3}\s[A-Z]\s*)\d{2}/)[0],
-        10
+        bomba.replace(/^[A-Z\s]{2}\d{3}\s[A-Z]\s*(\d{2}).*$/, "$1")
       ),
       year: parseInt(bomba.match(/\d{4}$/)[0], 10),
-      semester: bomba.match(/.{2}(?=\d{4}$)/)[0],
+      semester: bomba.replace(/^.*(.{2})\d{4}$/, "$1"),
       grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
     }));
     this.setState({ bombas: bombas, view: "resultado" });
@@ -145,6 +144,7 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
     };
     return (
       <div className="App">
+        <div className="AppBkg" />
         {this.state.view && views && views[this.state.view]
           ? views[this.state.view]
           : null}
