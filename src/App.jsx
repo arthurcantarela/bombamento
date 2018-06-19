@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.scss";
 
 import { Home, Integralizacao, Resultado } from "views";
+import { Background } from "components";
 
 class App extends Component {
   constructor(props) {
@@ -107,12 +108,13 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
   calculate = () => {
     const integralizacao = this.state.integralizacao;
     let bombas = integralizacao.match(
-      /[A-Z\s]{2}\d{3}\s[A-Z]\s*\d{2}[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
+      /[A-Z\s]{2}\d{3}\s[A-Z\d\s]\s*\d{2}\s[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
     );
     bombas = bombas.map(bomba => ({
       code: bomba.match(/^.{5}/)[0],
       credits: parseInt(
-        bomba.replace(/^[A-Z\s]{2}\d{3}\s[A-Z]\s*(\d{2}).*$/, "$1")
+        bomba.replace(/^[A-Z\s]{2}\d{3}\s[A-Z]\s*(\d{2}).*$/, "$1"),
+        10
       ),
       year: parseInt(bomba.match(/\d{4}$/)[0], 10),
       semester: bomba.replace(/^.*(.{2})\d{4}$/, "$1"),
@@ -144,7 +146,17 @@ QG111 B   02 +    5,2  30  4 2S2017     QG122 C   02 +    6,7  30  4 2S2017
     };
     return (
       <div className="App">
-        <div className="AppBkg" />
+        <div className="AppBkgs">
+          <div className="AppBkgWrap">
+            <Background />
+          </div>
+          <div className="AppBkgWrap">
+            <Background />
+          </div>
+          <div className="AppBkgWrap">
+            <Background />
+          </div>
+        </div>
         {this.state.view && views && views[this.state.view]
           ? views[this.state.view]
           : null}

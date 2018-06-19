@@ -20,6 +20,9 @@ const Resultado = ({ bombas, redo, ...rest }) => (
         {bombas.map((bomba, i) => <Bomba key={i} {...bomba} />)}
       </Slider>
     </ul>
+    <div>
+      TOTAL: {bombas.reduce((total, bomba) => total + bomba.credits, 0)}
+    </div>
     <button onClick={redo}>Refazer</button>
   </Fragment>
 );
