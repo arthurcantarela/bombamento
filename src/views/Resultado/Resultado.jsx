@@ -1,28 +1,41 @@
 import React, { Fragment } from "react";
 import "./Resultado.scss";
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import { Bomba } from "components";
 
 const Resultado = ({ bombas, redo, ...rest }) => (
   <Fragment>
-    <ul class="BombaSlider">
-      <Slider
-        settings={{
-          dots: true,
-          infinite: true,
-          speed: 500,
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }}
-      >
-        {bombas.map((bomba, i) => <Bomba key={i} {...bomba} />)}
-      </Slider>
-    </ul>
-    <div>
-      TOTAL: {bombas.reduce((total, bomba) => total + bomba.credits, 0)}
+    <div class="total">
+      TOTAL:{" "}
+      {bombas
+        ? bombas.reduce((total, bomba) => total + bomba.credits, 0)
+        : "NADA"}
     </div>
+    {!!bombas && (
+      <ul className="BombaList">
+        {Object.entries(
+          bombas.reduce((bombasObject, bomba) => {
+            if (bombasObject[bomba.code]) {
+              bombasObject[bomba.code].times += 1;
+            } else {
+              bombasObject[bomba.code] = {
+                ...bomba,
+                times: 1
+              };
+            }
+            return bombasObject;
+          }, {})
+        )
+          .sort(([_codeA, a], [_codeB, b]) => {
+            console.log(a.times, b.times);
+            if (a.times > b.times) return -1;
+            return 1;
+          })
+          .map(([code, bomba]) => {
+            return <Bomba key={code} bomba={bomba} />;
+          })}
+      </ul>
+    )}
     <button onClick={redo}>Refazer</button>
   </Fragment>
 );

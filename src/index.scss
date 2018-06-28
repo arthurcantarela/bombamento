@@ -9,4 +9,13 @@ body {
   * {
     box-sizing: inherit;
   }
+  button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 32px;
+    font-family: LemonMilk, sans-serif;
+  }
 }

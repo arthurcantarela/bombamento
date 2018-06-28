@@ -24,16 +24,18 @@ class App extends Component {
     let bombas = integralizacao.match(
       /[A-Z\s]{2}\d{3}\s[A-Z\d\s]\s*\d{2}\s[\s+*X!&?]\s*\d{1,2},\d\s*\d{1,3}\s*[56]\s.{6}/g
     );
-    bombas = bombas.map(bomba => ({
-      code: bomba.match(/^.{5}/)[0],
-      credits: parseInt(
-        bomba.replace(/^[A-Z\s]{2}\d{3}\s[A-Z]\s*(\d{2}).*$/, "$1"),
-        10
-      ),
-      year: parseInt(bomba.match(/\d{4}$/)[0], 10),
-      semester: bomba.replace(/^.*(.{2})\d{4}$/, "$1"),
-      grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
-    }));
+    if (bombas) {
+      bombas = bombas.map(bomba => ({
+        code: bomba.match(/^.{5}/)[0],
+        credits: parseInt(
+          bomba.replace(/^[A-Z\s]{2}\d{3}\s[A-Z]\s*(\d{2}).*$/, "$1"),
+          10
+        ),
+        year: parseInt(bomba.match(/\d{4}$/)[0], 10),
+        semester: bomba.replace(/^.*(.{2})\d{4}$/, "$1"),
+        grade: parseFloat(bomba.match(/\d{1,2},\d/)[0].replace(",", "."))
+      }));
+    }
     this.setState({ bombas: bombas, view: "resultado" });
   };
 

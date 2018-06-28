@@ -1,11 +1,11 @@
 import React from "react";
 import "./Bomba.scss";
 
-const Bomba = ({ code, credits, year, semester, grade, ...rest }) => (
+const Bomba = ({ bomba }) => (
   <li style={{ width: "100px" }}>
-    <h1>{code}</h1>
-    <h2>{credits}</h2>
-    {year} - {semester} - {grade}
+    <h1>{bomba.code}</h1>
+    {/* <h2>{bomba.credits}</h2> */}
+    {bomba.times > 1 ? "bombou " + bomba.times + " vezes" : null}
   </li>
 );
 
